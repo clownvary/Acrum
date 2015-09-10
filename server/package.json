@@ -14,5 +14,9 @@
     "ascrum"
   ],
   "author": "clownvary",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "express": "^4.13.3",
+    "supervisor": "^0.7.1"
+  }
 }
