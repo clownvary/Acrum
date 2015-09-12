@@ -7,15 +7,60 @@
 angular.module('router', ['ui.router'])
     .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
 
-        $urlRouterProvider.otherwise('/error');//¶¨Òå´íÎóÂ·ÓÉ
+        //$urlRouterProvider.otherwise('/error');//å®šä¹‰é”™è¯¯è·¯ç”±
 
         $stateProvider
             .state('home', {
+                url: '',//urlåœ¨å¤–å±‚é…ç½®
+                views: {
+                    'headbar': {
+                        templateUrl: 'headbar.tpl.html'
+                    }
+                }
 
+            })
+            .state('projects', {
+                url: '^/projects',
                 views: {
                     'headbar@': {
-                        url: '^/',
                         templateUrl: 'headbar.tpl.html'
+
+                    },
+                    'content@': {
+                        templateUrl: './projects/content.tpl.html'
+
+                    }
+                }
+            })
+            .state('admin', {
+                url: '^/admin',
+                views: {
+                    'headbar@': {
+                        templateUrl: 'headbar.tpl.html'
+
+                    },
+                    'content@':{
+                        templateUrl:'./admin/admin.tpl.html'
+                    }
+
+                }
+
+            })
+            .state('admin.project', {
+                url: '/project',
+                views: {
+                    'admin.content@admin': {
+                        templateUrl: './admin/project/admin.project.tpl.html'
+
+                    }
+                }
+            })
+            .state('admin.user', {
+                url: '/user',
+                views: {
+                    'admin.content@admin': {
+                        templateUrl: './admin/user/admin.user.tpl.html'
+
                     }
                 }
             })
