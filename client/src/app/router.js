@@ -16,7 +16,8 @@ angular.module('router', ['ui.router'])
                     'headbar': {
                         templateUrl: 'headbar.tpl.html'
                     }
-                }
+                },
+                data:{nickname:'首页',master:"home"}
 
             })
             .state('projects', {
@@ -30,7 +31,8 @@ angular.module('router', ['ui.router'])
                         templateUrl: './projects/content.tpl.html'
 
                     }
-                }
+                },
+                data:{nickname:'项目',master:'home'}
             })
             .state('admin', {
                 url: '^/admin',
@@ -43,7 +45,8 @@ angular.module('router', ['ui.router'])
                         templateUrl:'./admin/admin.tpl.html'
                     }
 
-                }
+                },
+                data:{nickname:'管理',master:'home'}
 
             })
             .state('admin.project', {
@@ -53,7 +56,8 @@ angular.module('router', ['ui.router'])
                         templateUrl: './admin/project/admin.project.tpl.html'
 
                     }
-                }
+                },
+                data:{nickname:'工程',master:'admin'}
             })
             .state('admin.user', {
                 url: '/user',
@@ -62,12 +66,8 @@ angular.module('router', ['ui.router'])
                         templateUrl: './admin/user/admin.user.tpl.html'
 
                     }
-                }
-            })
-            // nested list with just some random string data
-            .state('paragraph', {
-                url: '^/paragraph',
-                template: '<p>I could sure use a scoop of ice-creamss.</p> '
+                },
+                data:{nickname:'用户',master:'admin'}
             });
 
     }]);
