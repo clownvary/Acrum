@@ -19,11 +19,10 @@ angular.module('service.breadcrumbs', ['ui.router'])
             breadStates.push(curState);
             states = $stateProvider.get();
             o.findMaster(curState, states, breadStates);
-            var xx = breadStates;
-
+            breadStates=breadStates.reverse();
 
         });
-        //寻找上级导航
+        //(递归)寻找上级导航
         o.findMaster = function (ele, states, breads) {
             if (ele.state === ele.master) {
                 var hasOne = false;
@@ -38,7 +37,7 @@ angular.module('service.breadcrumbs', ['ui.router'])
 
 
             } else {
-                var cur = ele;
+               // var cur = ele;
                 var result = {};
                 states.forEach(function (cur) {
                     if (cur.name === ele.master) {
@@ -54,5 +53,9 @@ angular.module('service.breadcrumbs', ['ui.router'])
 
 
         }
+        //$rootScope.$watch('breadStates', function (newVal, oldVal) {
+        //    o.breads = newVal.reverse();
+        //}, true);
+        o.breads = breadStates;
         return o;
     }]);

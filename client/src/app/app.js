@@ -5,10 +5,13 @@
 angular.module('app', ['router','service.breadcrumbs'])
     //即使bread服务里是一个绑定的事件，只要注入了服务，就会全局执行，相当于全局绑定
 
-    .controller('home', ['$rootScope', '$scope','bread', function ($rootScope, $scope,_bread_) {
+    .controller('home', ['$rootScope', '$scope', function ($rootScope, $scope,_bread_) {
         $rootScope.title = 'welcome';
         $scope.content = 'from scope';
         $scope.curUser={};
         $scope.curUser.isAdmin=true;
 
+    }])
+    .controller('HeaderCtrl',['$scope','bread',function($scope,_bread_){
+       $scope.breads=_bread_.breads;//面包屑导航
     }]);
