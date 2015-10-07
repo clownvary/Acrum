@@ -5,23 +5,31 @@
  */
 
 angular.module('service.breadcrumbs', ['ui.router'])
-    .factory('bread', ['$rootScope', '$state', function ($rootScope, $stateProvider) {
+    .factory('bread', ['$rootScope', '$state', '$window', function ($rootScope, $stateProvider, $window) {
         var o = {};
-        var breadStates = [];//
+        var breadStates = [];
+        //每次打开页面会触发此事件
+        $rootScope.$on('$viewContentLoaded', function () {
+            o.getStateChain();
+        });
         $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+            o.getStateChain();
+        });
+
+        //获取状态链
+        o.getStateChain = function () {
             var curState = {
-                state: toState.name,
-                nickname: toState.data.nickname,
-                master: toState.data.master
+                state: $stateProvider.$current.self.name,
+                nickname: $stateProvider.$current.self.data.nickname,
+                master: $stateProvider.$current.self.data.master
             };
-            var tempState = {};
-            breadStates.length = 0;//清空\
+
+            breadStates.length = 0;//清空
             breadStates.push(curState);
             states = $stateProvider.get();
             o.findMaster(curState, states, breadStates);
-            breadStates=breadStates.reverse();
-
-        });
+            breadStates = breadStates.reverse();
+        }
         //(递归)寻找上级导航
         o.findMaster = function (ele, states, breads) {
             if (ele.state === ele.master) {
@@ -37,7 +45,7 @@ angular.module('service.breadcrumbs', ['ui.router'])
 
 
             } else {
-               // var cur = ele;
+                // var cur = ele;
                 var result = {};
                 states.forEach(function (cur) {
                     if (cur.name === ele.master) {
@@ -53,9 +61,6 @@ angular.module('service.breadcrumbs', ['ui.router'])
 
 
         }
-        //$rootScope.$watch('breadStates', function (newVal, oldVal) {
-        //    o.breads = newVal.reverse();
-        //}, true);
         o.breads = breadStates;
         return o;
     }]);

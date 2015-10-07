@@ -5,13 +5,13 @@
  */
 
 angular.module('router', ['ui.router'])
-    .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
+    .config(['$stateProvider', '$urlRouterProvider','$locationProvider', function ($stateProvider, $urlRouterProvider,$locationProvider) {
 
         //$urlRouterProvider.otherwise('/error');//定义错误路由
 
         $stateProvider
             .state('home', {
-                url: '',//url在外层配置
+                url: '^/',//url在外层配置，不是在views里面
                 views: {
                     'headbar': {
                         templateUrl: 'headbar.tpl.html'
@@ -50,7 +50,7 @@ angular.module('router', ['ui.router'])
 
             })
             .state('admin.project', {
-                url: '/project',
+                url: '/projectn',
                 views: {
                     'admin.content@admin': {
                         templateUrl: './admin/project/admin.project.tpl.html'
@@ -60,7 +60,7 @@ angular.module('router', ['ui.router'])
                 data:{nickname:'工程',master:'admin'}
             })
             .state('admin.user', {
-                url: '/user',
+                url: '/usern',
                 views: {
                     'admin.content@admin': {
                         templateUrl: './admin/user/admin.user.tpl.html'
@@ -69,5 +69,6 @@ angular.module('router', ['ui.router'])
                 },
                 data:{nickname:'用户',master:'admin'}
             });
+        $locationProvider.html5Mode(true);
 
     }]);
