@@ -21,7 +21,7 @@ angular.module('router', ['ui.router'])
 
             })
             .state('projects', {
-                url: '^/projects',
+                url: '^/projectsx',
                 views: {
                     'headbar@': {
                         templateUrl: 'headbar.tpl.html'
@@ -35,7 +35,7 @@ angular.module('router', ['ui.router'])
                 data:{nickname:'项目',master:'home'}
             })
             .state('admin', {
-                url: '^/admin',
+                url: '^/adminx',
                 views: {
                     'headbar@': {
                         templateUrl: 'headbar.tpl.html'
@@ -50,7 +50,7 @@ angular.module('router', ['ui.router'])
 
             })
             .state('admin.project', {
-                url: '/projectn',
+                url: '/projectx',
                 views: {
                     'admin.content@admin': {
                         templateUrl: './admin/project/admin.project.tpl.html'
@@ -60,7 +60,7 @@ angular.module('router', ['ui.router'])
                 data:{nickname:'工程',master:'admin'}
             })
             .state('admin.user', {
-                url: '/usern',
+                url: '/userx',
                 views: {
                     'admin.content@admin': {
                         templateUrl: './admin/user/admin.user.tpl.html'
