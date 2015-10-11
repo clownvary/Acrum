@@ -15,18 +15,14 @@ angular.module('app', ['router', 'service.breadcrumbs'])
     .controller('HeaderCtrl', ['$scope', 'bread', function ($scope, _bread_) {
         $scope.breads = _bread_.breads;//面包屑导航
         $scope.login = function () {
+
             layer.open({
-                title: 'test',
-                content: 'hello layer'
+                type: 2,
+                title:'登录',
+                area:['400px','300px'],
+
+                offset:'auto',
+                content: ['./login.tpl.html','no']
             });
-            //layer.open({
-            //    type: 2,
-            //    title: false,
-            //    area:'500px',
-            //    offset:'auto',
-            //    content: './admin/user/admin.user.tpl.html',
-            //    icon:3
-            //
-            //});
         }
     }]);
