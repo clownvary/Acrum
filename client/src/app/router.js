@@ -14,7 +14,11 @@ angular.module('router', ['ui.router'])
                 url: '^/',//url在外层配置，不是在views里面
                 views: {
                     'headbar': {
-                        templateUrl: 'headbar.tpl.html'
+                        templateUrl: 'index/headbar.tpl.html'
+                    },
+                    'content@': {
+                        templateUrl: './projects/content.tpl.html'
+
                     }
                 },
                 data:{nickname:'首页',master:"home"}
@@ -24,7 +28,7 @@ angular.module('router', ['ui.router'])
                 url: '^/projectsx',
                 views: {
                     'headbar@': {
-                        templateUrl: 'headbar.tpl.html'
+                        templateUrl: 'index/headbar.tpl.html'
 
                     },
                     'content@': {
@@ -38,7 +42,7 @@ angular.module('router', ['ui.router'])
                 url: '^/adminx',
                 views: {
                     'headbar@': {
-                        templateUrl: 'headbar.tpl.html'
+                        templateUrl: 'index/headbar.tpl.html'
 
                     },
                     'content@':{
