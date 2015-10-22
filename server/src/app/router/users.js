@@ -5,19 +5,45 @@
  */
 
 var express=require('express');
+var https = require('https');
+var qs = require('querystring');
+var config =require('../config');
 var router=express.Router();
+
+var optionsGet = {
+    hostname: config.mongo.host,
+    port: 443,
+    path: '/api/1/databases/'+config.mongo.dbName+'/collections/users?apiKey='+config.mongo.mongolabKey,
+    method: 'GET'
+};
 
 router.use(function timeLog(req,res,next) {
     console.log('Time:'+Date.now());
     next();
 });
 
-/* GET users listing. */
+/* GET users list. */
 router.get('/', function(req, res) {
+    var reqIn = https.request(optionsGet, function(resIn) {
+        console.log("statusCode: ", resIn.statusCode);
+        console.log("headers: ", resIn.headers);
 
-    res.send('respond with a resource ok');
+        resIn.on('data', function(data) {
+             data=JSON.parse(data.toString());
+            //res.send(data.toString());
+            res.json({"data":data});
+            res.end();
+        });
+    });
+    reqIn.end();
+
+    reqIn.on('error', function(e) {
+        console.error(e);
+    });
+    //res.send("ok");
+
 });
-/* GET users listing. */
+/* GET users entity. */
 router.get('/:id', function(req, res) {
     res.send('respond with a resource '+req.params.id);
 });

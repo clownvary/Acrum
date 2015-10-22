@@ -8,7 +8,9 @@ module.exports={
     mongo:{
         mongolabKey:'F0Z7oaVObiXFJZtRfLwY1CR7SLJsfVAn',
         dbName:'ascrum',
-        baseUrl:'https://api.mongolab.com/api/1'
+        baseUrl:'https://api.mongolab.com/api/1',
+        host:'api.mongolab.com'
+
     }
 
 

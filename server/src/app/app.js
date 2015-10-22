@@ -5,6 +5,7 @@
  */
 var express = require('express');
 var users = require('./router/users');
+
 var app = express();
 
 app.get('/', function (req, res) {
@@ -13,7 +14,10 @@ app.get('/', function (req, res) {
 app.use('/users', users);
 
 app.use('/static', express.static('static'));
-var server = app.listen(3000, function () {
+process.on('uncaughtException', function(err) {
+    console.log(err+"为捕获");
+});
+var server = app.listen(3002, function () {
     var host = server.address().address;
     var port = server.address().port;
     console.log('Example app listening at http://%s:%s', host, port)

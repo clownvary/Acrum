@@ -14,8 +14,8 @@
 <div class="logindiv">
 <form class="form-horizontal center-block" novalidate name="loginForm">
     <div class="form-group has-feedback " ng-class="{'has-success':loginForm.name.$valid&&loginForm.name.$dirty,'has-error':loginForm.name.$invalid&&loginForm.name.$dirty}">
-        <label for="name" class="col-xs-2 control-label">用户名</label>
-        <div class="col-xs-8 col-xs-offset-1">
+        <label for="name" class="col-xs-3 col-md-2 control-label">用户名</label>
+        <div class="col-xs-8 col-md-6 col-xs-offset-1">
             <input type="text" class="form-control" required name="name" id="name" ng-model="user.name" placeholder="请输入用户名5位以上字母" ng-pattern="/^[a-zA-Z]{5,}/">
              <span class="glyphicon glyphicon-ok form-control-feedback" ng-if="loginForm.name.$valid&&loginForm.name.$dirty" aria-hidden="true"></span>
              <span class="glyphicon glyphicon-remove form-control-feedback" ng-if="loginForm.name.$invalid&&loginForm.name.$dirty" aria-hidden="true"></span>
@@ -23,14 +23,14 @@
         </div>
     </div>
     <div class="form-group has-feedback" ng-class="{'has-success':loginForm.name.$valid&&loginForm.name.$dirty,'has-error':loginForm.name.$invalid&&loginForm.name.$dirty}">
-        <label for="pwd" class="col-xs-2 control-label">密码</label>
-        <div class="col-xs-8 col-xs-offset-1">
+        <label for="pwd" class="col-xs-3 col-md-2 control-label">密码</label>
+        <div class="col-xs-8 col-md-6 col-xs-offset-1">
             <input type="password" class="form-control" ng-model="user.pwd" id="pwd" name="pwd" placeholder="请输入密码" >
         </div>
     </div>
 
     <div class="form-group">
-        <div class="col-xs-offset-3 col-xs-6">
+        <div class="col-xs-offset-4 col-md-offset-3 col-xs-6">
             <div class="checkbox">
                 <label>
                     <input type="checkbox" ng-model="user.check"> 记住我
