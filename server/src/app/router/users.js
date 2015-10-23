@@ -10,12 +10,10 @@ var qs = require('querystring');
 var config =require('../config');
 var router=express.Router();
 
-var optionsGet = {
-    hostname: config.mongo.host,
-    port: 443,
-    path: '/api/1/databases/'+config.mongo.dbName+'/collections/users?apiKey='+config.mongo.mongolabKey,
-    method: 'GET'
-};
+
+
+
+
 
 router.use(function timeLog(req,res,next) {
     console.log('Time:'+Date.now());
@@ -24,24 +22,25 @@ router.use(function timeLog(req,res,next) {
 
 /* GET users list. */
 router.get('/', function(req, res) {
+    var optionsGet = {
+        hostname: config.mongo.host,
+        port: 443,
+        path: '/api/1/databases/'+config.mongo.dbName+'/collections/users?apiKey='+config.mongo.mongolabKey,
+        method: 'GET'
+    };
     var reqIn = https.request(optionsGet, function(resIn) {
-        console.log("statusCode: ", resIn.statusCode);
-        console.log("headers: ", resIn.headers);
-
+        //console.log("statusCode: ", resIn.statusCode);
+        //console.log("headers: ", resIn.headers);
         resIn.on('data', function(data) {
              data=JSON.parse(data.toString());
-            //res.send(data.toString());
-            res.json({"data":data});
+            res.json({"type":true,"data":data});
             res.end();
         });
     });
-    reqIn.end();
-
     reqIn.on('error', function(e) {
-        console.error(e);
+       res.json({"type":false});
     });
-    //res.send("ok");
-
+    reqIn.end();
 });
 /* GET users entity. */
 router.get('/:id', function(req, res) {
@@ -49,7 +48,25 @@ router.get('/:id', function(req, res) {
 });
 /*Create new object*/
 router.post('/',function(req,res){
-   res.send('post method');
+    var optionPost={
+        hostname: config.mongo.host,
+        port: 443,
+        path: '/api/1/databases/'+config.mongo.dbName+'/collections/users?apiKey='+config.mongo.mongolabKey,
+        method: 'POST'
+    };
+    var reqIn = https.request(optionPost, function(resIn) {
+        //console.log("statusCode: ", resIn.statusCode);
+        //console.log("headers: ", resIn.headers);
+        resIn.on('data', function(data) {
+            data=JSON.parse(data.toString());
+            res.json({"type":true,"data":data});
+            res.end();
+        });
+    });
+    reqIn.on('error', function(e) {
+        res.json({"type":false});
+    });
+    reqIn.end();
 });
 /*Modify an object*/
 router.put('/:id',function(req,res){
