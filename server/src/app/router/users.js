@@ -45,16 +45,13 @@ router.get('/', function(req, res) {
 /* GET users entity. */
 router.get('/:id', function(req, res) {
     res.send('respond with a resource '+req.params.id);
-});
-/*Create new object*/
-router.post('/',function(req,res){
-    var optionPost={
+    var optionsGet = {
         hostname: config.mongo.host,
         port: 443,
-        path: '/api/1/databases/'+config.mongo.dbName+'/collections/users?apiKey='+config.mongo.mongolabKey,
-        method: 'POST'
+        path: '/api/1/databases/'+config.mongo.dbName+'/collections/users/'+req.params.id+'?apiKey='+config.mongo.mongolabKey,
+        method: 'GET'
     };
-    var reqIn = https.request(optionPost, function(resIn) {
+    var reqIn = https.request(optionsGet, function(resIn) {
         //console.log("statusCode: ", resIn.statusCode);
         //console.log("headers: ", resIn.headers);
         resIn.on('data', function(data) {
@@ -68,13 +65,73 @@ router.post('/',function(req,res){
     });
     reqIn.end();
 });
+/*Create new object*/
+router.post('/',function(req,res){
+    var post_data={
+        name:req.body.name,
+        password:req.body.pwd
+    };
+    post_data=JSON.stringify(post_data);
+    var optionPost={
+        hostname: config.mongo.host,
+        port: 443,
+        path: '/api/1/databases/'+config.mongo.dbName+'/collections/users?apiKey='+config.mongo.mongolabKey,
+        method: 'POST',
+        headers: {
+            "Content-Type": 'application/json',
+            "Content-Length": post_data.length
+        }
+    };
+    var reqIn = https.request(optionPost, function(resIn) {
+        //console.log("statusCode: ", resIn.statusCode);
+        //console.log("headers: ", resIn.headers);
+        resIn.on('data', function(data) {
+            data=JSON.parse(data.toString());
+            res.json({"type":true,"data":data});
+            res.end();
+        });
+        resIn.on('error', function(e) {
+
+            res.json({"type":false});
+            res.end();
+        });
+    });
+    reqIn.on('error', function(e) {
+        res.json({"type":false});
+    });
+    reqIn.write(post_data + "\n");
+    reqIn.end();
+});
 /*Modify an object*/
 router.put('/:id',function(req,res){
     res.send('put method'+req.params.id);
 });
 /*Remove an object*/
 router.delete('/:id',function(req,res){
-    res.send('delete method'+req.params.id);
+    var optionDel={
+        hostname: config.mongo.host,
+        port: 443,
+        path: '/api/1/databases/'+config.mongo.dbName+'/collections/users/'+req.params.id+'?apiKey='+config.mongo.mongolabKey,
+        method: 'DELETE',
+        headers: {
+            "Content-Type": 'application/json'
+        }
+    };
+    var reqIn = https.request(optionDel, function(resIn) {
+        resIn.on('data', function(data) {
+            data=JSON.parse(data.toString());
+            res.json({"type":true,"data":data});
+            res.end();
+        });
+        resIn.on('error', function(e) {
+            res.json({"type":false});
+            res.end();
+        });
+    });
+    reqIn.on('error', function(e) {
+        res.json({"type":false});
+    });
+    reqIn.end();
 });
 
 module.exports = router;

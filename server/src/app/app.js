@@ -12,9 +12,23 @@ var app = express();
 /*
  解决跨域问题
  */
+app.use(function(req, res, next) {
+    req.rawBody = '';
+    req.setEncoding('utf8');
 
-app.use(bodyparse.urlencoded({extended:true}));
+    req.on('data', function(chunk) {
+        req.rawBody += chunk;
+    });
+
+    req.on('end', function() {
+        next();
+    });
+});
+
+//app.use(bodyparse.urlencoded({extended: true}));
 app.use(bodyparse.json());
+//app.use(bodyparse.text());
+//app.use(bodyparse.raw());
 app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST', 'PUT', 'DELETE');
@@ -25,14 +39,9 @@ app.get('/', function (req, res) {
     res.send('hello world');
 });
 app.use('/users', users);
-app.post('/',function(req,res){
-    var body ='';
-    req.on('data', function(data) {body += data});
-     console.log(req.body.pwd);
-});
 app.use('/static', express.static('static'));
 process.on('uncaughtException', function (err) {
-    console.log(err + "为捕获");
+    console.log(err + "捕获");
 });
 var server = app.listen(3002, function () {
     var host = server.address().address;
