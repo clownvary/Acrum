@@ -12,23 +12,28 @@ var app = express();
 /*
  解决跨域问题
  */
+
+
+app.use(bodyparse.text());
+//app.use(bodyparse.raw());
+//app.use(bodyparse.json());
 app.use(function(req, res, next) {
-    req.rawBody = '';
-    req.setEncoding('utf8');
-
-    req.on('data', function(chunk) {
-        req.rawBody += chunk;
-    });
-
-    req.on('end', function() {
-        next();
-    });
+    //req.rawBody = '';
+    //req.setEncoding('utf8');
+    //
+    //req.on('data', function(chunk) {
+    //    req.rawBody += chunk;
+    //});
+    if(typeof req.body==="string")
+    {
+        req.body=JSON.parse(req.body);
+    }
+    next();
 });
 
-//app.use(bodyparse.urlencoded({extended: true}));
-app.use(bodyparse.json());
-//app.use(bodyparse.text());
-//app.use(bodyparse.raw());
+
+app.use(bodyparse.urlencoded({extended: true}));
+
 app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST', 'PUT', 'DELETE');
