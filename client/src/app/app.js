@@ -2,14 +2,21 @@
  * Created by clownvary on 2015/9/11.
  * Email:vary_007@163.com
  */
-angular.module('app', ['router','service.breadcrumbs','directive.modal'])
+angular.module('app', ['router', 'service.breadcrumbs', 'directive.modal'])
     //即使bread服务里是一个绑定的事件，只要注入了服务，就会全局执行，相当于全局绑定
 
-    .controller('home', ['$rootScope', '$scope', function ($rootScope, $scope) {
+    .controller('home', ['$rootScope', '$scope', '$http', function ($rootScope, $scope, $http) {
         $rootScope.title = 'welcome';
         $scope.content = 'from scope';
         $scope.curUser = {};
         $scope.curUser.isAdmin = true;
+        $scope.testPost = function () {
+            $http.post('http://192.168.1.107:3002/users', {name: 'clownvary', 'pwd': 'ppppppp'})
+                .success(function (d) {
+                    console.log(d);
+                })
+
+        }
 
     }])
     .controller('HeaderCtrl', ['$scope', 'bread', function ($scope, _bread_) {
@@ -18,8 +25,8 @@ angular.module('app', ['router','service.breadcrumbs','directive.modal'])
             $("#sss").modal('show');
 
         }
-        $scope.go=function()
-        {
+        $scope.go = function () {
             alert('ok');
         }
+
     }]);
